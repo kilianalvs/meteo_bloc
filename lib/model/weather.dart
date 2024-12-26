@@ -3,11 +3,10 @@ class Weather {
   Current? current;
   Forecast? forecast;
 
-  Weather.fromJson(Map<String, dynamic> json):
-        location = Location.fromJson(json["location"]),
+  Weather.fromJson(Map<String, dynamic> json)
+      : location = Location.fromJson(json["location"]),
         current = Current.fromJson(json["current"]),
-        forecast = Forecast(json["forecast"])
-  ;
+        forecast = Forecast(json["forecast"]);
 }
 
 class Location {
@@ -15,8 +14,8 @@ class Location {
   String? region;
   String? country;
 
-  Location.fromJson(Map<String, dynamic> jsonLocation):
-        name = jsonLocation["name"],
+  Location.fromJson(Map<String, dynamic> jsonLocation)
+      : name = jsonLocation["name"],
         region = jsonLocation["region"],
         country = jsonLocation["country"];
 }
@@ -33,49 +32,46 @@ class Current {
   double? visibility;
   double? uv;
 
-  Current.fromJson(Map<String, dynamic> json):
-        temperature = json["temp_c"],
-        wind =json["wind_kph"],
+  Current.fromJson(Map<String, dynamic> json)
+      : temperature = (json["temp_c"] as num?)?.toDouble(),
+        wind = (json["wind_kph"] as num?)?.toDouble(),
         windDirection = json["wind_dir"],
-        precipitation = json["precip_mm"],
+        precipitation = (json["precip_mm"] as num?)?.toDouble(),
         humidity = json["humidity"],
         clouds = json["cloud"],
-        feelsLike = json["feelslike_c"],
-        visibility = json["vis_km"],
-        uv = json["uv"],
-        condition = Condition.fromJson(json["condition"])
-  ;
-
+        feelsLike = (json["feelslike_c"] as num?)?.toDouble(),
+        visibility = (json["vis_km"] as num?)?.toDouble(),
+        uv = (json["uv"] as num?)?.toDouble(),
+        condition = Condition.fromJson(json["condition"]);
 }
 
 class Condition {
   String? text;
   String? icon;
 
-  Condition.fromJson(Map<String, dynamic> json):
-        text = json["text"],
+  Condition.fromJson(Map<String, dynamic> json)
+      : text = json["text"],
         icon = json["icon"];
 }
 
 class Forecast {
   List<ForecastDay?> forecastDay = [];
 
-  Forecast(Map<String, dynamic> json){
+  Forecast(Map<String, dynamic> json) {
     final list = json["forecastday"] as List<dynamic>;
-    forecastDay = list.map((d) => ForecastDay.fromJson(d as Map<String, dynamic>)
-    ).toList();
+    forecastDay = list
+        .map((d) => ForecastDay.fromJson(d as Map<String, dynamic>))
+        .toList();
   }
-
 }
 
 class ForecastDay {
   String? date;
   Day? day;
 
-  ForecastDay.fromJson(Map<String, dynamic> json):
-        date = json["date"],
+  ForecastDay.fromJson(Map<String, dynamic> json)
+      : date = json["date"],
         day = Day.fromJson(json["day"]);
-
 }
 
 class Day {
@@ -91,17 +87,16 @@ class Day {
   Condition? condition;
   double? uv;
 
-  Day.fromJson(Map<String, dynamic> json):
-        maxTemp = json["maxtemp_c"],
-        minTemp = json["mintemp_c"],
-        wind = json["maxwind_kph"],
-        precipitation = json["totalprecip_mm"],
-        snow = json["totalsnow_cm"],
-        visibility = json["avgvis_km"],
-        humidity = json["avghumidity"],
+  Day.fromJson(Map<String, dynamic> json)
+      : maxTemp = (json["maxtemp_c"] as num?)?.toDouble(),
+        minTemp = (json["mintemp_c"] as num?)?.toDouble(),
+        wind = (json["maxwind_kph"] as num?)?.toDouble(),
+        precipitation = (json["totalprecip_mm"] as num?)?.toDouble(),
+        snow = (json["totalsnow_cm"] as num?)?.toDouble(),
+        visibility = (json["avgvis_km"] as num?)?.toDouble(),
+        humidity = (json["avghumidity"] as num?)?.toDouble(),
         chanceRain = json["daily_chance_of_rain"],
         chanceSnow = json["daily_chance_of_snow"],
         condition = Condition.fromJson(json["condition"]),
-        uv = json["uv"];
-
+        uv = (json["uv"] as num?)?.toDouble();
 }

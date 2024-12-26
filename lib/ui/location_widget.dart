@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:meteo_bloc/bloc/bloc.dart';
 import 'package:meteo_bloc/bloc/bloc_location.dart';
 import 'package:meteo_bloc/bloc/bloc_provider.dart';
+import 'package:meteo_bloc/bloc/bloc_weather.dart';
 import 'package:meteo_bloc/services/api_service.dart';
+import 'package:meteo_bloc/ui/weather_widget.dart';
 
 class LocationWidget extends StatelessWidget {
   const LocationWidget({super.key});
@@ -17,9 +20,10 @@ class LocationWidget extends StatelessWidget {
             ApiService(position: snapshot.data!).callApi();
           }
           return (snapshot.hasData)
-              ? Center(child: Text("Position => ${snapshot.data!}"))
+              ? BlocProvider(
+                  bloc: BlocWeather(),
+                  child: WeatherWidget(position: snapshot.data!))
               : const Center(child: CircularProgressIndicator());
-        }
-    );
+        });
   }
 }

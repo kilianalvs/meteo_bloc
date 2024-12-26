@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
+import 'package:meteo_bloc/model/weather.dart';
 
 class ApiService {
   final Position position;
@@ -20,9 +23,9 @@ class ApiService {
   }
 
   //Faire l'appel à l'api
-  Future callApi() async {
+  Future<Weather> callApi() async {
     final result = await http.get(urlRequest());
-    final body = result.body;
-    print(urlRequest());
+    final body = json.decode(utf8.decode(result.bodyBytes));
+    return Weather.fromJson(body);
   }
 }
