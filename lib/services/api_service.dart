@@ -13,7 +13,7 @@ class ApiService {
   Uri urlRequest() {
     const apiKey = "3c3d06764b514bd781d213856242512";
     const baseUrl = "https://api.weatherapi.com/v1/forecast.json";
-    const days = "5";
+    const days = "7";
     const lang = "fr";
     String q = "${position.latitude},${position.longitude}";
 
